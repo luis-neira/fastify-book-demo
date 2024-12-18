@@ -12,5 +12,5 @@ module.exports = fp(function (fastify, opts, next) {
     req.log.info({ req, res: reply, err }, err?.message)
     reply.send(err)
   })
-  next();
+  next()
 })
