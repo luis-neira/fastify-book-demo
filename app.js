@@ -7,8 +7,6 @@ const { options } = require('./configs/server-options')
 module.exports = async function (fastify, opts) {
   // Place here your custom code!
 
-  fastify.log.info('The .env file has been read %s', process.env.MONGO_URL)
-
   fastify.register(AutoLoad, {
     dir: path.join(__dirname, 'schemas'),
     indexPattern: /^loader.js$/i

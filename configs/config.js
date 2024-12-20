@@ -15,4 +15,6 @@ module.exports = fp(async function configLoader (fastify, opts) {
       url: fastify.secrets.MONGO_URL
     }
   })
+}, {
+  name: 'application-config'
 })
