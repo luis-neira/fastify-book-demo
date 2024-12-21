@@ -7,8 +7,8 @@ fi
 
 # Required environment variables
 required_vars=(
-    "MONGO_INITDB_ROOT_USERNAME"
-    "MONGO_INITDB_ROOT_PASSWORD"
+    "MONGO_PORT"
+    "MONGO_CONTAINER_NAME"
 )
 
 # Check if all required environment variables are set
@@ -21,9 +21,7 @@ done
 
 # Run Docker with dynamic environment variables
 docker run -d \
-    -p 27017:27017 \
+    -p 27017:$MONGO_PORT \
     --rm \
-    --name fastify-mongo \
-    -e MONGO_INITDB_ROOT_USERNAME=$MONGO_INITDB_ROOT_USERNAME \
-    -e MONGO_INITDB_ROOT_PASSWORD=$MONGO_INITDB_ROOT_PASSWORD \
+    --name $MONGO_CONTAINER_NAME \
     mongo:5

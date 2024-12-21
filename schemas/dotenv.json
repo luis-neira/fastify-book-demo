@@ -14,10 +14,11 @@
     "MONGO_URL": {
       "type": "string"
     },
-    "MONGO_INITDB_ROOT_USERNAME": {
-      "type": "string"
+    "MONGO_PORT": {
+      "type": "integer",
+      "default": 27017
     },
-    "MONGO_INITDB_ROOT_PASSWORD": {
+    "MONGO_CONTAINER_NAME": {
       "type": "string"
     }
   }
