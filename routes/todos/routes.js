@@ -108,6 +108,22 @@ module.exports = async function todoRoutes (fastify, _opts) {
     method: 'POST',
     url: '/:id/:status',
     handler: async function changeStatus (request, reply) {
+      const done = request.params.status === 'done'
+
+      const res = await todos.updateOne({
+        _id: new fastify.mongo.ObjectId(request.params.id)
+      }, {
+        $set: {
+          done,
+          modifiedAt: new Date()
+        }
+      })
+
+      if (res.modifiedCount === 0) {
+        reply.code(404)
+        return { error: 'Todo not found' }
+      }
+
       reply.code(204)
     }
   })
