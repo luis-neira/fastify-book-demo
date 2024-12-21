@@ -7,7 +7,20 @@ module.exports = async function todoRoutes (fastify, _opts) {
     method: 'GET',
     url: '/',
     handler: async function listTodo (request, reply) {
-      return { data: [], totalCount: 0 }
+      const { skip, limit, title } = request.query
+      const filter = title
+        ? {
+            title: new RegExp(title, 'i')
+          }
+        : {}
+
+      const data = await todos.find(filter, {
+        limit,
+        skip
+      }).toArray()
+
+      const totalCount = await todos.countDocuments(filter)
+      return { data, totalCount }
     }
   })
 
