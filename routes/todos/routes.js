@@ -34,24 +34,11 @@ module.exports = async function todoRoutes (fastify, _opts) {
       }
     },
     handler: async function createTodo (request, reply) {
-      const _id = new this.mongo.ObjectId()
-      const now = new Date()
-      const createdAt = now
-      const modifiedAt = now
+      const insertedId = await this.mongoDataSource.createTodo(request.body)
 
-      const newTodo = {
-        _id,
-        id: _id,
-        ...request.body,
-        done: false,
-        createdAt,
-        modifiedAt
-      }
-
-      await todos.insertOne(newTodo)
       reply.code(201)
 
-      return { id: _id }
+      return { id: insertedId }
     }
   })
 

@@ -9,7 +9,7 @@ module.exports = fp(async function todoAutoHooks (fastify, opts) {
   fastify.register(schemas)
 
   fastify.decorate('mongoDataSource', {
-    async createTdo ({ title }) {
+    async createTodo ({ title }) {
       const _id = new fastify.mongo.ObjectId()
       const now = new Date()
       const { insertedId } = await todos.insertOne({
