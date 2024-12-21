@@ -1,1 +1,6 @@
-PUT {{host}}/todos/25
+PUT {{host}}/todos/6766684ff8811600f5943829
+Content-Type: application/json
+
+{
+  "title": "my first task updated"
+}
