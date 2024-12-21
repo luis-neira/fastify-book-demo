@@ -92,6 +92,14 @@ module.exports = async function todoRoutes (fastify, _opts) {
     method: 'DELETE',
     url: '/:id',
     handler: async function deleteTodo (request, reply) {
+      const res = await todos.deleteOne({
+        _id: new fastify.mongo.ObjectId(request.params.id)
+      })
+
+      if (res.deletedCount === 0) {
+        reply.code(404)
+        return { error: 'Todo not found' }
+      }
       reply.code(204)
     }
   })
