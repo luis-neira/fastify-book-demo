@@ -1,0 +1,7 @@
+POST {{host}}/auth/authenticate
+Content-Type: application/json
+
+{
+  "username": "solidSnake",
+  "password": "lesinfanteterible"
+}

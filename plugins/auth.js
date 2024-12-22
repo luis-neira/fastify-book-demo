@@ -7,7 +7,7 @@ module.exports = fp(async function authenticationPlugin (fastify, opts) {
   const revokedTokens = new Map()
 
   fastify.register(fastifyJwt, {
-    secret: fastify.secret.JWT_SECRET,
+    secret: fastify.secrets.JWT_SECRET,
     trusted: function isTrusted (request, decoratedToken) {
       return !revokedTokens.has(decoratedToken.jti)
     }

@@ -1,0 +1,2 @@
+POST {{host}}/auth/logout
+Authorization: Bearer {{token}}

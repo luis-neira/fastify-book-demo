@@ -20,6 +20,12 @@
     },
     "MONGO_CONTAINER_NAME": {
       "type": "string"
+    },
+    "JWT_SECRET": {
+      "type": "string"
+    },
+    "JWT_EXPIRE_IN": {
+      "type": "string"
     }
   }
 }
