@@ -1,1 +1,7 @@
-POST {{host}}/todos/676673b85af63f971a50e9d7/undone
+POST {{host}}/todos/{{target_todo_id}}/done
+Authorization: Bearer {{token}}
+
+###
+
+POST {{host}}/todos/{{target_todo_id}}/undone
+Authorization: Bearer {{token}}

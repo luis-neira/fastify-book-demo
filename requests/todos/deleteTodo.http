@@ -1,1 +1,2 @@
-DELETE {{host}}/todos/6766684ff8811600f5943829
+DELETE {{host}}/todos/{{target_todo_id}}
+Authorization: Bearer {{token}}
