@@ -12,7 +12,7 @@ module.exports = async function (fastify, opts) {
     indexPattern: /^loader.js$/i
   })
 
-  await fastify.register(require('./configs/config'))
+  // await fastify.register(require('./configs/config'))
 
   // fastify.log.info('Config loaded %o', fastify.config)
 
@@ -26,7 +26,8 @@ module.exports = async function (fastify, opts) {
     dirNameRoutePrefix: false,
     indexPattern: /^no$/i,
     ignorePattern: /.*.no-load\.js/,
-    options: fastify.config
+    // options: fastify.config
+    options: Object.assign({}, opts)
   })
 
   // This loads all plugins defined in routes
