@@ -2,6 +2,7 @@
   "name": "fastify-app",
   "version": "1.0.0",
   "description": "This project was bootstrapped with Fastify-CLI.",
+  "private": true,
   "main": "app.js",
   "engines": {
     "node": ">=18.20.5"
@@ -10,12 +11,12 @@
     "test": "test"
   },
   "scripts": {
-    "test": "node --test test/**/*.test.js",
-    "start": "fastify start --options app.js",
-    "dev": "npm run start -- --watch --pretty-logs -debug",
     "lint": "standard",
     "lint:fix": "standard --fix",
     "pretest": "npm run lint",
+    "test": "node --test test/**/*.test.js",
+    "start": "fastify start -l info --options app.js",
+    "dev": "npm run start -- --watch --pretty-logs -debug",
     "mongo:start": "./scripts/start-mongo.sh",
     "mongo:stop": "docker container stop fastify-mongo",
     "prepare": "husky"

@@ -14,7 +14,7 @@ module.exports = async function (fastify, opts) {
 
   await fastify.register(require('./configs/config'))
 
-  fastify.log.info('Config loaded %o', fastify.config)
+  // fastify.log.info('Config loaded %o', fastify.config)
 
   // Do not touch the following lines
 
