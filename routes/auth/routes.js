@@ -3,6 +3,7 @@
 const fp = require('fastify-plugin')
 
 const generateHash = require('./generate-hash')
+const dataStore = require('../data-store')
 
 module.exports.prefixOverride = ''
 
@@ -24,6 +25,8 @@ module.exports = fp(
         const { hash, salt } = await generateHash(request.body.password)
 
         try {
+          await dataStore.store(request.body) // Purely for testing mock purposes
+
           const newUserId = await this.usersDataSource.createUser({
             username: request.body.username,
             salt,
