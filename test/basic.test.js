@@ -1,6 +1,18 @@
 const t = require('tap')
 const fcli = require('fastify-cli/helper')
 
+const dockerHelper = require('./helper-docker')
+const docker = dockerHelper()
+const { Containers } = dockerHelper
+
+t.before(async function before () {
+  await docker.startContainer(Containers.mongo)
+})
+
+t.teardown(async () => {
+  await docker.stopContainer(dockerHelper.Containers.mongo)
+})
+
 // t.todo('the application should start', async (t) => {})
 // t.todo('the alive route is online', async (t) => {})
 // t.todo('the application should not start', async (t) => {})
