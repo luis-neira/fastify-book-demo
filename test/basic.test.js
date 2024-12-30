@@ -1,31 +1,25 @@
+'use strict'
+
 const t = require('tap')
 const { buildApp } = require('./helper')
 
-const dockerHelper = require('./helper-docker')
-const docker = dockerHelper()
-const { Containers } = dockerHelper
-
-t.before(async function before () {
-  await docker.startContainer(Containers.mongo)
-})
-
-t.teardown(async () => {
-  await docker.stopContainer(dockerHelper.Containers.mongo)
-})
-
-t.test('the application should start', async (t) => {
-  const app = await buildApp(t)
-  await app.ready()
-  t.pass('the application is ready')
-})
-
 t.test('the alive route is online', async (t) => {
-  const app = await buildApp(t)
+  const app = await buildApp(t, {
+    MONGO_URL: 'mongodb://localhost:27017/basis-test-db'
+  })
   const response = await app.inject({
     method: 'GET',
     url: '/'
   })
   t.same(response.json(), { root: true })
+})
+
+t.test('the application should start', async (t) => {
+  const app = await buildApp(t, {
+    MONGO_URL: 'mongodb://localhost:27017/basis-test-db'
+  })
+  await app.ready()
+  t.pass('the application is ready')
 })
 
 t.test('the application should not start', async mainTest => {

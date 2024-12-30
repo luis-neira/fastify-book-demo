@@ -3,20 +3,10 @@
 const t = require('tap')
 const { buildApp } = require('./helper')
 
-const dockerHelper = require('./helper-docker')
-const docker = dockerHelper()
-const { Containers } = dockerHelper
-
-t.before(async function before () {
-  await docker.startContainer(Containers.mongo)
-})
-
-t.teardown(async () => {
-  await docker.stopContainer(dockerHelper.Containers.mongo)
-})
-
 t.test('cannot access protected routes', async (t) => {
-  const app = await buildApp(t)
+  const app = await buildApp(t, {
+    MONGO_URL: 'mongodb://localhost:27017/login-test-db'
+  })
   const privateRoutes = [
     '/auth/me'
   ]
@@ -48,7 +38,9 @@ t.test('register error', async (t) => {
   }
   t.teardown(cleanCache)
 
-  const app = await buildApp(t)
+  const app = await buildApp(t, {
+    MONGO_URL: 'mongodb://localhost:27017/login-test-db'
+  })
   const response = await app.inject({
     method: 'POST',
     url: '/auth/register',
@@ -62,7 +54,9 @@ t.test('register error', async (t) => {
 })
 
 t.test('register the user', async (t) => {
-  const app = await buildApp(t)
+  const app = await buildApp(t, {
+    MONGO_URL: 'mongodb://localhost:27017/login-test-db'
+  })
   const response = await app.inject({
     method: 'POST',
     url: '/auth/register',
@@ -76,7 +70,9 @@ t.test('register the user', async (t) => {
 })
 
 t.test('failed login', async (t) => {
-  const app = await buildApp(t)
+  const app = await buildApp(t, {
+    MONGO_URL: 'mongodb://localhost:27017/login-test-db'
+  })
   const response = await app.inject({
     method: 'POST',
     url: '/auth/authenticate',
@@ -94,7 +90,9 @@ t.test('failed login', async (t) => {
 })
 
 t.test('successful login', async (t) => {
-  const app = await buildApp(t)
+  const app = await buildApp(t, {
+    MONGO_URL: 'mongodb://localhost:27017/login-test-db'
+  })
   const login = await app.inject({
     method: 'POST',
     url: '/auth/authenticate',
