@@ -2,34 +2,36 @@
 
 // This file contains code that we reuse
 // between our tests.
+const fcli = require('fastify-cli/helper')
 
-const { build: buildApplication } = require('fastify-cli/helper')
-const path = require('node:path')
-const AppPath = path.join(__dirname, '..', 'app.js')
+const startArgs = '-l silent --options app.js'
+
+const defaultEnv = {
+  NODE_ENV: 'test',
+  MONGO_URL: 'mongodb://localhost:27017/test',
+  JWT_SECRET: 'secret-1234567890'
+}
 
 // Fill in this config with all the configurations
 // needed for testing the application
-function config () {
-  return {}
+function config (env) {
+  return {
+    configData: env
+  }
 }
 
 // automatically build and tear down our instance
-async function build (t) {
-  // you can set all the options supported by the fastify CLI command
-  const argv = [AppPath]
+async function buildApp (t, env, serverOptions) {
+  const app = await fcli.build(startArgs,
+    config({ ...defaultEnv, ...env }),
+    serverOptions
+  )
 
-  // fastify-plugin ensures that all decorators
-  // are exposed for testing purposes, this is
-  // different from the production setup
-  const app = await buildApplication(argv, config())
-
-  // close the app after we are done
-  t.after(() => app.close())
+  t.teardown(() => { app.close() })
 
   return app
 }
 
 module.exports = {
-  config,
-  build
+  buildApp
 }

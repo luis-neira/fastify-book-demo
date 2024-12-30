@@ -1,5 +1,5 @@
 const t = require('tap')
-const fcli = require('fastify-cli/helper')
+const { buildApp } = require('./helper')
 
 const dockerHelper = require('./helper-docker')
 const docker = dockerHelper()
@@ -13,33 +13,11 @@ t.teardown(async () => {
   await docker.stopContainer(dockerHelper.Containers.mongo)
 })
 
-// t.todo('the application should start', async (t) => {})
-// t.todo('the alive route is online', async (t) => {})
-// t.todo('the application should not start', async (t) => {})
-
-const startArgs = '-l info --options app.js'
-
 t.test('the application should start', async (t) => {
-  const envParam = {
-    NODE_ENV: 'test',
-    MONGO_URL: 'mongodb://localhost:27017/test'
-  }
-  const app = await fcli.build(startArgs, {
-    configData: envParam
-  })
-  t.teardown(() => { app.close() })
+  const app = await buildApp(t)
   await app.ready()
   t.pass('the application is ready')
 })
-
-async function buildApp (t, env, serverOptions) {
-  const app = await fcli.build(startArgs,
-    { configData: env },
-    serverOptions
-  )
-  t.teardown(() => { app.close() })
-  return app
-}
 
 t.test('the alive route is online', async (t) => {
   const app = await buildApp(t)
